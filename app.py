@@ -317,8 +317,8 @@ def make_pca_fig(df, sample_names, mz_mask, euc_mask, cos_mask):
                      bbox=dict(boxstyle="round,pad=0.25", fc="white",
                                ec="#C5D5E8", alpha=0.75, lw=0.7))
 
-    ax2.set_xlabel(f"PC 1  ({var2[0]:.1f}% 설명)", fontsize=11, color="#444")
-    ax2.set_ylabel(f"PC 2  ({var2[1]:.1f}% 설명)" if len(var2) > 1 else "PC 2",
+    ax2.set_xlabel(f"PC 1  ({var2[0]:.1f}% Explained)", fontsize=11, color="#444")
+    ax2.set_ylabel(f"PC 2  ({var2[1]:.1f}% Explained)" if len(var2) > 1 else "PC 2",
                    fontsize=11, color="#444")
     ax2.set_title("PCA — 2D Projection", fontsize=13, fontweight="bold",
                   color="#1A3A5C", pad=12)
