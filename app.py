@@ -507,7 +507,7 @@ df_all = pd.read_excel(uploaded)
 
 # 첫 번째 열이 문자열(샘플명)인지 확인
 first_col = df_all.columns[0]
-if df_all[first_col].dtype == object or not np.issubdtype(df_all[first_col].dtype, np.number):
+if not pd.api.types.is_numeric_dtype(df_all[first_col]):
     sample_names = df_all[first_col].astype(str).tolist()
     df_raw = df_all.drop(columns=[first_col])
 else:
