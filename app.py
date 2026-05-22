@@ -18,6 +18,11 @@ from scipy.stats import shapiro, levene
 import warnings
 warnings.filterwarnings("ignore")
 
+# matplotlib font stabilization
+import matplotlib
+matplotlib.rcParams['axes.unicode_minus'] = False
+plt.rcParams['font.family'] = 'DejaVu Sans'
+
 # ═══════════════════════════════════════════════════════════════════
 # 페이지 설정
 # ═══════════════════════════════════════════════════════════════════
@@ -222,13 +227,13 @@ def make_rank_fig(sample_names, mz_scores, mz_mask, euc_scores, euc_mask,
                     f"threshold\n= {thresh}", color=COLOR_TLINE,
                     fontsize=8, va="top")
 
-        patches = [mpatches.Patch(color=COLOR_OUT, label="이상치 (Outlier)"),
-                   mpatches.Patch(color=COLOR_NRM,  label="정상 (Normal)")]
+        patches = [mpatches.Patch(color=COLOR_OUT, label="Outlier"),
+                   mpatches.Patch(color=COLOR_NRM,  label="Normal")]
         ax.legend(handles=patches, fontsize=8.5, loc="lower right",
                   framealpha=0.85)
         ax.set_xlim(0, max(vals) * 1.22)
 
-    fig.suptitle("방법별 이상치 스코어 순위 비교\n(위로 갈수록 이상치 가능성 높음)",
+    fig.suptitle("Outlier Score Ranking Comparison\n(Higher position = higher outlier possibility)",
                  fontsize=13, fontweight="bold", color="#1A3A5C", y=1.01)
     plt.tight_layout()
     return fig
@@ -259,7 +264,7 @@ def make_cv_fig(cv_table):
     ax.set_xticks(x)
     ax.set_xticklabels(vars_, fontsize=11, fontweight="500")
     ax.set_ylabel("CV (%)", fontsize=12)
-    ax.set_title("변수별 CV 비교 — 이상치 제거 전/후", fontsize=13,
+    ax.set_title("CV Comparison Before/After Outlier Removal", fontsize=13,
                  fontweight="bold", color="#1A3A5C", pad=12)
     ax.legend(fontsize=9.5, framealpha=0.85)
     ax.spines["top"].set_visible(False)
@@ -374,21 +379,21 @@ def make_pca_fig(df, sample_names, mz_mask, euc_mask, cos_mask):
     # ── 공통 범례 ──
     legend_elements = [
         Line2D([0], [0], marker="o", color="w", markerfacecolor="#E74C3C",
-               markersize=9, label="Modified Z-Score 이상치"),
+               markersize=9, label="Modified Z-Score Outlier"),
         Line2D([0], [0], marker="o", color="w", markerfacecolor="#8E44AD",
-               markersize=9, label="Euclidean 이상치"),
+               markersize=9, label="Euclidean Outlier"),
         Line2D([0], [0], marker="o", color="w", markerfacecolor="#E67E22",
-               markersize=9, label="Cosine 이상치"),
+               markersize=9, label="Cosine Outlier"),
         Line2D([0], [0], marker="o", color="w", markerfacecolor="#C0392B",
-               markersize=9, label="전체 방법 이상치"),
+               markersize=9, label="Detected by All Methods"),
         Line2D([0], [0], marker="o", color="w", markerfacecolor="#2980B9",
-               markersize=9, label="정상"),
+               markersize=9, label="Normal"),
     ]
     fig.legend(handles=legend_elements, loc="lower center", ncol=5,
                fontsize=9, framealpha=0.9,
                bbox_to_anchor=(0.5, -0.04))
 
-    fig.suptitle("PCA 기반 다변량 분포 시각화", fontsize=14,
+    fig.suptitle("PCA-based Multivariate Distribution", fontsize=14,
                  fontweight="bold", color="#1A3A5C", y=1.01)
     plt.tight_layout()
     return fig
